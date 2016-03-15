@@ -30,13 +30,14 @@ func A() (a, b, c int) {
 ```
 ##不定长变参函数
 * 必须作为参数列表的最后一个参数
-* 值拷贝传递，如果直接传入slice则是传地址
+* 值拷贝传递，任何操作不影响原变量，如果直接传入slice则是传地址，就会影响
 ```go
 func A(a ...int) {
 	fmt.Println(a)
 }
 ```
 ##匿名函数
+* 必须放在一个外层函数中，不能直接作为最外层函数
 ```go
 func main() {
 	a := func() {
@@ -68,5 +69,31 @@ func main() {
 			fmt.Println(i)
 		}()
 	}
+}
+```
+* 传说中的异常处理 panic和recover ，recover必须在defer中定义才有用
+```go
+func main() {
+	A()
+	B()
+	C()
+}
+
+func A() {
+	fmt.Println("func A")
+	//结果是A recover in B C
+}
+
+func B() {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("recover in B")
+		}
+	}()
+	panic("Panic in B")
+}
+
+func C() {
+	fmt.Println("func C")
 }
 ```
