@@ -97,3 +97,36 @@ func C() {
 	fmt.Println("func C")
 }
 ```
+##匿名函数 defer 闭包运用
+```go
+func main() {
+	var fs = [4]func(){}
+	for i := 0; i < 4; i++ {
+		defer fmt.Println("defer i = ", i)
+		defer func() { fmt.Println("defer_closure i = ", i) }()
+		fs[i] = func() {
+			fmt.Println("closure i = ", i)
+		}
+	}
+
+	for _, f := range fs {
+		f()
+	}
+}
+```
+* 输出为
+	closure i =  4
+	closure i =  4
+	closure i =  4
+	closure i =  4
+	defer_closure i =  4
+	defer i =  3
+	defer_closure i =  4
+	defer i =  2
+	defer_closure i =  4
+	defer i =  1
+	defer_closure i =  4
+	defer i =  0
+因为从外侧直接抓来的变量是抓的地址，而第一个defer用的是值拷贝
+
+#结构struct
