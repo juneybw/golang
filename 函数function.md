@@ -129,4 +129,4 @@ func main() {
 	defer i =  0
 因为从外侧直接抓来的变量是抓的地址，而第一个defer用的是值拷贝
 
-#结构struct
+
