@@ -1,9 +1,9 @@
 #struct 
 ##定义
-type <Name> struct{}
-是一种类型，在go语言中代替class，但是又没有class的功能，没有继承
-直接传递的时候也是值拷贝
-一般直接将变量定义为struct的指针，就是在定义是加一个&
+* type <Name> struct{}
+* 是一种类型，在go语言中代替class，但是又没有class的功能，没有继承
+* 直接传递的时候也是值拷贝
+* 一般直接将变量定义为struct的指针，就是在定义是加一个&
 
 ##匿名结构
 ```go
@@ -16,7 +16,7 @@ a := &struct {
 	}
 	fmt.Println(a)//{joe 19}
 ```
-结构中的匿名结构
+* 结构中的匿名结构
 ```go
 type Person struct {
 	Name    string
@@ -34,7 +34,7 @@ func main() {
 }
 ```
 ##匿名字段
-匿名字段中，将会把类型名作为字段的名称
+* 匿名字段中，将会把类型名作为字段的名称
 ```go
 type Person struct {
 	string
@@ -47,12 +47,12 @@ func main() {
 }
 ```
 ##结构之间比较
-结构命一致，内容一致，如果做a==b比较，返回 true
+* 结构命一致，内容一致，如果做a==b比较，返回 true
 
 ##嵌入结构，go中的组合
-需要注意的是嵌入匿名结构的名称会自动变为结构名，所以赋值的时候要使用human：human{}的形式
-并且在使用sex字段时，可以直接a.Sex这样使用
-如果Teacher中也有Sex字段，则a.Sex指向外层中的Sex，而不是human中的Sex
+* 需要注意的是嵌入匿名结构的名称会自动变为结构名，所以赋值的时候要使用human：human{}的形式
+* 并且在使用sex字段时，可以直接a.Sex这样使用
+* 如果Teacher中也有Sex字段，则a.Sex指向外层中的Sex，而不是human中的Sex
 ```go
 type human struct {
 	Sex int
