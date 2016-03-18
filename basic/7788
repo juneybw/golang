@@ -1,0 +1,8 @@
+#7788
+
+##数组
+* 数组是值类型
+```go
+var arr1 = new([5]int)// arr1是*[5]int类型
+var arr2 [5]int//arr2是[5]int类型
+```
