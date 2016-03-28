@@ -55,3 +55,28 @@ func Info(o interface{}) {
 	   Age : int = 12
 	 Hello : func(main.User)
 ```
+###匿名字段反射
+```go
+type User struct {
+	Id   int
+	Name string
+	Age  int
+}
+type Manager struct {
+	User
+	Title string
+}
+func main() {
+	m := Manager{User: User{1, "Joe", 12}, Title: "manager"}
+	t := reflect.TypeOf(m)
+	fmt.Printf("%#v\n", t.FieldByIndex([]int{0, 1}))//传入slice获取User的Name字段
+}
+```
+
+###通过反射修改值
+```go
+x := 123
+	v := reflect.ValueOf(&x)
+	v.Elem().SetInt(999)
+	fmt.Println(x)
+	```
