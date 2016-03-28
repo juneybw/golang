@@ -76,7 +76,60 @@ func main() {
 ###通过反射修改值
 ```go
 x := 123
-	v := reflect.ValueOf(&x)
-	v.Elem().SetInt(999)
-	fmt.Println(x)
-	```
+v := reflect.ValueOf(&x)
+v.Elem().SetInt(999)
+fmt.Println(x)
+```
+修改类型中的字段
+```go
+type User struct {
+	Id   int
+	Name string
+	Age  int
+}
+
+func main() {
+	u := User{1, "okok", 12}
+	SetU(&u)
+	fmt.Println(u)
+}
+
+func SetU(o interface{}) {
+	v := reflect.ValueOf(o)
+
+	if v.Kind() == reflect.Ptr && !v.Elem().CanSet() {
+		fmt.Println("xxx")
+		return
+	} else {
+		v = v.Elem()
+	}
+	f := v.FieldByName("Name")//判断字段名是否在类型中
+	if !f.IsValid() {
+		fmt.Println("Ban")
+		return
+	}
+	if f.Kind() == reflect.String {
+		f.SetString("lalala")
+	}
+}
+```
+###反射动态调用方法
+```go
+type User struct {
+	Id   int
+	Name string
+	Age  int
+}
+
+func (u User) Hello(name string) {
+	fmt.Println("hello ", name, ",my name is ", u.Name)
+}
+
+func main() {
+	u := User{1, "joe", 12}
+	v := reflect.ValueOf(u)
+	mv := v.MethodByName("Hello")
+	args := []reflect.Value{reflect.ValueOf("Mike")}
+	mv.Call(args)
+}
+```
